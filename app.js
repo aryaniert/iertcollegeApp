@@ -54,7 +54,7 @@ app.post("/register", async (req, res) => {
                 passwordsignup_confirm: req.body.passwordsignup_confirm
             })
 
-            console.log("the success part  in the post registe" + registerStudent);
+           // console.log("the success part  in the post register" + registerStudent);
 
             const token = await registerStudent.generateAuthToken();
             //console.log("the token part in the post register" + token);
@@ -145,12 +145,14 @@ app.post("/ContactUs", async (req, res) => {
 app.get("/", (req, res) => {
           res.render('login');     
 });
-app.get("/home", (req, res) => {
+app.get("/home", auth, async(req, res) => {
     res.render('index');     
 });
 app.get("/Logout", auth, async(req, res , next) =>{
     try {
        // console.log(req.user);
+
+       await res.clearCookie("jwt");
 
         req.user.tokens = req.user.tokens.filter((currElement)=> {
             return currElement.token != req.token
@@ -158,7 +160,7 @@ app.get("/Logout", auth, async(req, res , next) =>{
 
        // delete from database
 
-        await res.clearCookie("jwt");
+        
         await req.user.save();
         res.render('login');
 
