@@ -142,8 +142,11 @@ app.post("/ContactUs", async (req, res) => {
 
 })
 
-app.get("/", auth, (req, res) => {
-        res.render('index');
+app.get("/", (req, res) => {
+          res.render('login');     
+});
+app.get("/home", (req, res) => {
+    res.render('index');     
 });
 app.get("/Logout", auth, async(req, res , next) =>{
     try {
