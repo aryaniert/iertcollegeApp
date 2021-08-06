@@ -7,11 +7,10 @@ const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
 const auth = require("./middels/auth");
 const port = process.env.PORT || 3000;
-
+const DB = process.env.DATABASE;
 const app = express();
 
-
-mongoose.connect("mongodb://localhost:27017/iert", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
     .then(() => console.log("connection success"))
     .catch((err) => console.log(err));
 
@@ -148,7 +147,7 @@ app.get("/", (req, res) => {
 app.get("/home", auth, async(req, res) => {
     res.render('index');     
 });
-app.get("/Logout", auth, async(req, res , next) =>{
+app.get("/Logout", auth, async( req, res , next) =>{
     try {
        // console.log(req.user);
 
