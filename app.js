@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
 const auth = require("./middels/auth");
 const port = process.env.PORT || 3000;
-const DB = process.env.DATABASE;
+const DB = process.env.DATABASE ;
 const app = express();
 
 mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
@@ -19,6 +19,7 @@ const ContactUs = require("./models/ContactUs");
 
 const { json } = require("express");
 const { log } = require("console");
+const { signedCookie } = require('cookie-parser');
 
 
 const newpath = path.join(__dirname, "");
@@ -142,7 +143,7 @@ app.post("/ContactUs", async (req, res) => {
 })
 
 app.get("/", (req, res) => {
-          res.render('login');     
+     res.render('login');     
 });
 app.get("/home", auth, async(req, res) => {
     res.render('index');     
