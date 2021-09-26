@@ -3,6 +3,7 @@ const path = require('path');
 const hbs = require('hbs');
 const bcrypt = require('bcryptjs');
 const express = require('express');
+const requests = require('requests');
 const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
 const auth = require("./middels/auth");
@@ -15,6 +16,7 @@ mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
     .catch((err) => console.log(err));
 
 const Register = require("./models/register");
+const Notice = require("./models/notic");
 const ContactUs = require("./models/ContactUs");
 
 const { json } = require("express");
@@ -26,14 +28,56 @@ const newpath = path.join(__dirname, "");
 const viewpath = path.join(__dirname, "templets/views");
 const temppath = path.join(__dirname, "templets/partials");
 
-app.use(express.json());
+app.use(express.json()); //imp
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 
 app.use(express.static(newpath));
 app.set('view engine', 'hbs');
 app.set('views', viewpath);
 hbs.registerPartials(temppath);
+
+app.post("/notic",async(req,res)=>{
+    try {
+        // console.log(req.body);
+    const notice = new Notice(req.body);
+    res.send(notice);
+    notice.save();
+        
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+app.get("/notic",async(req,res)=>{
+    try {
+       const noticeBoard = await Notice.find();
+       res.send(noticeBoard);
+        
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+app.get("/notic/:idd",async(req,res)=>{
+    try {
+       const id = req.params.idd;
+       const noticeBoard = await Notice.find(id);
+       res.send(noticeBoard);
+        
+    } catch (error) {
+        res.status(404).send(error);
+    }
+});
+app.delete("/notic/:idd",async(req,res)=>{
+    try {
+       const id = req.params.idd;
+       const noticeBoard = await Notice.find
+       res.send(noticeBoard);
+        
+    } catch (error) {
+        res.status(404).send(error);
+    }
+});
 
 
 
@@ -73,10 +117,6 @@ app.post("/register", async (req, res) => {
         } else {
             res.send("password are not matching");
         }
-
-
-
-
     } catch (error) {
         res.status(400).send(error);
 
@@ -97,7 +137,7 @@ app.post("/login", async (req, res) => {
         //console.log("the token part in the post login : " + token);
 
         res.cookie("jwt", token, {
-            expires: new Date(Date.now() + 723000000),
+            expires: new Date(Date.now() + 7230000000),
             httpOnly: true,
         });
 

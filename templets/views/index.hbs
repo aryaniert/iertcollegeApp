@@ -12,7 +12,8 @@
 
 </head>
 
-<body>
+<body onload="myFunction()" >
+    <div id="loading"></div>
     {{>header}}
     <section id="home">
         <h1 class="h-primary">Welcome to Notes world</h1>
@@ -28,7 +29,7 @@
 
                 <h2 class="h-secondary center">COMMON SUBJECTS</h2>
                 <p class="center">
-                    <marquee class="holder" direction="up" behavior="alternate" scrolldelay="400" height="230px"
+                    <marquee class="holder" direction="up" behavior="alternate" scrolldelay="400" height="180px"
                         width="300px">
                         <ul id="ticker1">
                             <li> <a
@@ -109,6 +110,13 @@
     </section>
 
     {{>footer}}
+
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction(){
+            preloader.style.display = 'none';
+        }
+    </script>
 
 
     </body>
