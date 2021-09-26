@@ -186,10 +186,6 @@ html{
     font-family: 'Bree Serif', serif;
 
 } 
-
-
-
-
 footer{
     background: black;
     color: white;
@@ -226,7 +222,7 @@ footer{
 
 /*aryan*/
 marquee{
-    color: red;
+    color: rgb(55 24 226);
     font-size: 1.2rem;
 
 }
@@ -302,20 +298,20 @@ marquee p img{
 
 
 .holder { 
-    text-align: center;
-    margin: auto;
+  text-align: center;
+  margin: auto;
   background-color:#ccc;
-  width:230px;
+  width:235px;
   height:250px;
   overflow:hidden;
-  padding:15px;
+  padding:10px;
   font-family:Helvetica;
 }
 .holder .mask {
   position: relative;
   left: 0px;
   top: 10px;
-  width:300px;
+  width:240px;
   height:240px;
   overflow: hidden;
 }
