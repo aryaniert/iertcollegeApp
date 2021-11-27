@@ -11,7 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Bree+Serif&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body onload="myFunction()" >
+    <div id="loading"></div>
+
     {{>header}}
     <section id="home">
         <h1 class="h-primary">Welcome to IERT</h1>
@@ -43,5 +45,11 @@
         </div>
     </section>
     {{>footer}}
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction(){
+            preloader.style.display = 'none';
+        }
+    </script>
 
     </body>

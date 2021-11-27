@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="/css/animate-custom.css" />
 </head>
 
-<body>
+<body onload="myFunction()" >
+    <div id="loading"></div>
     <div class="container">
         <!-- Codrops top bar -->
         <div class="codrops-top">
@@ -91,6 +92,12 @@
             </div>
         </section>
     </div>
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction(){
+            preloader.style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>
