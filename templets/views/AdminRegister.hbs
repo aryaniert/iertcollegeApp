@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+    <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class" />
+    <meta name="author" content="Codrops" />
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style1.css" />
+    <link rel="stylesheet" type="text/css" href="/css/animate-custom.css" />
+</head>
+
+<body onload="myFunction()" >
+    <div id="loading"></div>
+    <div class="container">
+        <!-- Codrops top bar -->
+        <div class="codrops-top">
+            <a href="">
+                <strong>&laquo; Notes: </strong>Welcome
+            </a>
+            <span class="right">
+                <a href=" ">
+                    <strong>Welcome to my Notes World</strong>
+                </a>
+            </span>
+            <div class="clr"></div>
+        </div>
+        <!--/ Codrops top bar -->
+        <header>
+            <!-- <h1>Login and Registration Form <span>with HTML5 and CSS3</span></h1>
+				<nav class="codrops-demos">
+					<span>Click <strong>"Join us"</strong> to see the form switch</span>
+				</nav> -->
+        </header>
+        <section>
+            <div id="container_demo">
+
+                <a class="hiddenanchor" id="toregister"></a>
+                <a class="hiddenanchor" id="tologin"></a>
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+
+                        <form action="/AdminRegister" method="POST" autocomplete="on">
+                            <h1> Sign up As admin</h1>
+                            <p>
+                                <label for="usernamesignup" class="uname" data-icon="u">First name</label>
+                                <input id="usernamesignup" name="firstsignup" required="required" type="text"
+                                    placeholder="eg. Aryan" />
+                            </p>
+                            <p>
+                                <label for="usernamesignup" class="uname" data-icon="u">Last name</label>
+                                <input id="usernamesignup" name="lastsignup" required="required" type="text"
+                                    placeholder="eg. Vishwakarma" />
+                            </p>
+                            <p>
+                                <label for="emailsignup" class="youmail" data-icon="e"> Your email</label>
+                                <input id="emailsignup" name="emailsignup" required="required" type="email"
+                                    placeholder="aryan15498@mail.com" />
+                            </p>
+                            <p>
+                                <label for="phonesignup" class="uphone" data-icon="u"> Your phone no.</label>
+                                <input id="emailsignup" name="phonesignup" required="required" type="tel"
+                                    placeholder="eg. 6307499999" />
+                            </p>
+                            <p>
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
+                                <input id="passwordsignup" name="passwordsignup" required="required" type="password"
+                                    placeholder="eg. X8df!90EO" />
+                            </p>
+                            <p>
+                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your
+                                    password </label>
+                                <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required"
+                                    type="password" placeholder="eg. X8df!90EO" />
+                            </p>
+                            <p class="signin button">
+                                <input type="submit" value="Sign up" />
+                            </p>
+                            <p class="change_link">
+                                Already a member ?
+                                <a href="AdminLogin" class="to_register"> Go and log in as Admin </a>
+                            </p>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        var preloader = document.getElementById('loading');
+        function myFunction(){
+            preloader.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
