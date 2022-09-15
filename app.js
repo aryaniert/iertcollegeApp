@@ -8,9 +8,13 @@ const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
 const auth = require("./middels/auth");
 const Adminauth = require("./middels/Adminauth");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 1000;
 const DB = process.env.DATABASE;
 const app = express();
+const getnotes = require('./router/notesmanage/getNotes');
+
+
+
 
 mongoose.connect(DB, {
         useNewUrlParser: true,
@@ -58,6 +62,15 @@ app.use(express.static(newpath));
 app.set('view engine', 'hbs');
 app.set('views', viewpath);
 hbs.registerPartials(temppath);
+
+
+// All router path add here
+app.use('/notes',getnotes);
+
+
+app.get('/upload/notes',auth,(req,res)=>{
+    res.render('UploadNotes');
+})
 
 app.post("/notic", async (req, res) => {
     try {
@@ -398,7 +411,7 @@ app.get("/Student", Adminauth, async (req, res) => {
     });
 
 });
-app.post("/Student", (req, res) => {
+app.post("/Student",Adminauth, (req, res) => {
     // console.log(req.body);
     console.log('submitted form');
     if (req.body._id == '')
@@ -492,6 +505,8 @@ app.get('/:id', (req, res) => {
                 viewTitle: "Update Student",
                 student: doc
             });
+        }else{
+            res.render("list");
         }
     });
 });
@@ -513,10 +528,9 @@ app.get("*", (req, res) => {
 
 app.get("/AdminLogout", Adminauth, async (req, res, next) => {
     try {
-        //    console.log(req.user);
+           console.log(req.user);
 
-        await res.clearCookie("jwt");
-
+        await res.clearCookie("jwtAdmin");
         req.user.tokens = req.user.tokens.filter((currElement) => {
             return currElement.token != req.token
         })

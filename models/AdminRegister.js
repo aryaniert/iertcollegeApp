@@ -38,15 +38,12 @@ const AdminSchema = new mongoose.Schema({
         }
     }]
     
-
-    
 })
 
-//generating tokrn
+//generating token
 
 AdminSchema.methods.generateAuthToken = async function() {
     try {
-    //console.log(this._id);
     const token = jwt.sign({_id:this._id},process.env.SECRET_KEY);
     this.tokens =this.tokens.concat({token:token});
     await this.save();
@@ -63,15 +60,12 @@ AdminSchema.methods.generateAuthToken = async function() {
 AdminSchema.pre("save",async function(next){
 
     if(this.isModified("passwordsignup")){
-        
         this.passwordsignup = await bcrypt.hash(this.passwordsignup,10);
         this.passwordsignup_confirm = await bcrypt.hash(this.passwordsignup_confirm,10);;
     }
     next();
     
 })
-
-
 
 const AdminRegister = new mongoose.model("RegisterAdmin",AdminSchema);
 
