@@ -154,7 +154,7 @@ app.post("/AdminRegister", async (req, res) => {
       const token = await registerAdmin.generateAuthToken();
       //console.log("the token part in the post register" + token);
 
-      res.cookie("jwt", token, {
+      res.cookie("Adminjwt", token, {
         expires: new Date(Date.now() + 12300000),
         httpOnly: true,
       });
@@ -181,12 +181,18 @@ app.post("/AdminLogin", async (req, res) => {
     const usermail = await RegisterAdmin.findOne({
       emailsignup: email,
     });
+    if (!usermail) {
+        res.json({
+          login: "plz enter correct email or password Or sign up again ",
+        });
+    }
     const isMatch = await bcrypt.compare(password, usermail.passwordsignup);
+    
 
     const token = await usermail.generateAuthToken();
     //console.log("the token part in the post login : " + token);
 
-    res.cookie("jwtAdmin", token, {
+    res.cookie("Adminjwt", token, {
       expires: new Date(Date.now() + 7230000000),
       httpOnly: true,
     });
@@ -200,7 +206,8 @@ app.post("/AdminLogin", async (req, res) => {
       res.send("invalid email or password ");
     }
   } catch (error) {
-    res.status(400).send(error);
+    // res.status(400).send(error);
+    console.log(error)
   }
 });
 
@@ -234,16 +241,14 @@ app.post("/login", async (req, res) => {
       httpOnly: true,
     });
 
-    console.log("the cookies status in the post login " + req.cookies.jwt);
+    // console.log("the cookies status in the post login " + req.cookies.jwt);
     // console.log(isMatch);
     if (isMatch) {
       res.status(201).render("index");
     } else {
       res.send("invalid email or password ");
-      // res.status(201).render("index");
     }
   } catch (error) {
-    // res.status(400).send(error)
     console.log(error);
   }
 });
@@ -283,10 +288,9 @@ app.get("/home", auth, async (req, res) => {
 });
 app.get("/Logout", auth, async (req, res, next) => {
   try {
+    console.log("Logged Out");
     // console.log(req.user);
-
     await res.clearCookie("jwt");
-
     req.user.tokens = req.user.tokens.filter((currElement) => {
       return currElement.token != req.token;
     });
@@ -299,6 +303,26 @@ app.get("/Logout", auth, async (req, res, next) => {
     res.status(500).send(error);
   }
 });
+
+app.get("/AdminLogout", Adminauth, async (req, res, next) => {
+    try {
+    //   console.log('====================================')
+    //   console.log("admin logout success");
+    //   console.log('====================================')
+      console.log(req.Adminuser);
+      await res.clearCookie("Adminjwt");
+      req.Adminuser.tokens = req.Adminuser.tokens.filter((currElement) => {
+        return currElement.token != req.token;
+      });
+  
+      // delete from database
+      await req.Adminuser.save();
+      res.render("AdminLogin");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  });
 
 app.get("/About", auth, (req, res) => {
   res.render("About");
@@ -465,25 +489,6 @@ app.get("/delete/:id", (req, res) => {
 app.get("*", (req, res) => {
   res.end("404 errror page");
 });
-
-app.get("/AdminLogout", Adminauth, async (req, res, next) => {
-  try {
-    console.log(req.user);
-
-    await res.clearCookie("jwtAdmin");
-    req.user.tokens = req.user.tokens.filter((currElement) => {
-      return currElement.token != req.token;
-    });
-
-    // delete from database
-
-    await req.user.save();
-    res.render("AdminLogin");
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
-
 app.listen(port, () => {
   console.log("server on");
 });
